@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>three.js test</title>
+    <title>three.js</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,24 +18,14 @@
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
-        // criação do objeto 3d 
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x404040 } );
-        const cube = new THREE.Mesh( geometry, material );
-
         // adicionando o obejto a cena e movimentando a câmera
-        scene.add( cube );
-        camera.position.z = 3;
-        camera.position.y = 1;
-        camera.position.x = -5;
-        camera.rotation.y = -1;
+        /*scene.add( 'obj' );*/
+        camera.position.z = 5;
 
-        // criando a animação 
+        // renderizando
         function animate() {
 	        requestAnimationFrame( animate );
 	        renderer.render( scene, camera );
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
         }
         animate();
     </script>

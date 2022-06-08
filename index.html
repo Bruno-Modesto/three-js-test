@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>three.js</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-        <footer>Local de testes de 3D</footer>
+    <footer>Local de testes de 3D</footer>
     <script src="./three.js"></script>
     <script>
         // criação da cena e câmera
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
         // criação do renderizador 
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // criação do objeto
+        const geometry = new THREE.boxGeometry(1,1,1);
+        const material = new THREE.MeshBasicMaterial()
+        material.color = new THREE.Color(0x404040)
+        const box = new THREE.Mesh(geometry,material)
 
         // adicionando o obejto a cena e movimentando a câmera
-        /*scene.add( 'objeto' );*/
+        scene.add( box );
         camera.position.z = 5;
 
         // renderizando
         function animate() {
-	        requestAnimationFrame( animate );
-	        renderer.render( scene, camera );
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
         }
         animate();
     </script>
 </body>
+
 </html>

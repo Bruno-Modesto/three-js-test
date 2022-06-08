@@ -1,4 +1,17 @@
 body
 {
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+footer 
+{
+    position: absolute;
+    background: rgb(80, 80, 80);
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    color: white;
+    text-transform: uppercase;
 }

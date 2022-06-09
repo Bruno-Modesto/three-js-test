@@ -97,11 +97,24 @@ light.castShadow = true;
 light.shadow.radius = 1;
 scene.add(pointLight, pointLight2, light)
 
+// loader
+
+
+// controls
+/*
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.campingFactor = 0.25;
+controls.enableZoom = true;
+*/
 
 // animation
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    /*
+    controls.update();
+    */
     cube.rotation.x += .01;
     cube.rotation.z += .01;
 }

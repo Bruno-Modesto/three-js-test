@@ -80,7 +80,7 @@ scene.add(box, cube);
 
 // objects position
 box.position.y = -1;
-cube.position.y = 0.2;
+cube.position.y = 0.3;
 
 // lights
 const pointLight = new THREE.PointLight(0xff0000, 5)

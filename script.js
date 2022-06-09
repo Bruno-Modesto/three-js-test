@@ -84,37 +84,45 @@ cube.position.y = 0.3;
 
 // lights
 const pointLight = new THREE.PointLight(0xff0000, 5)
-const pointLight2 = new THREE.PointLight(0x0000ff, 5)
 pointLight.position.set(3,5,4)
-pointLight2.position.set(-3,5,-4)
 pointLight.castShadow = true;
-pointLight2.castShadow = true;
 pointLight.shadow.radius = 20;
+
+const pointLight2 = new THREE.PointLight(0x0000ff, 5)
+pointLight2.position.set(-3,5,-4)
+pointLight2.castShadow = true;
 pointLight2.shadow.radius = 20;
+
 const light = new THREE.PointLight( 0xffffff, 1.5 );
 light.position.set(0,20,0)
 light.castShadow = true;
 light.shadow.radius = 1;
+
 scene.add(pointLight, pointLight2, light)
 
 // loader
-
+/*
+let loader = new THREE.GLTFLoader();
+loader.load('trybeLogo.gltf', function(gltf) {
+    scene.add(gltf.scene);
+    trybe = gltf.scene.children[0];
+    trybe.position.set(1,1,1)
+})
+*/
 
 // controls
-/*
+
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.campingFactor = 0.25;
 controls.enableZoom = true;
-*/
+
 
 // animation
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    /*
     controls.update();
-    */
     cube.rotation.x += .01;
     cube.rotation.z += .01;
 }

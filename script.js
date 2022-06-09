@@ -4,23 +4,13 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 // object
 const geometryCube = new THREE.BoxGeometry(1,1,1);
-/*
-const geometrySphere = new THREE.SphereBufferGeometry(.5,64,64);
-*/
 const geometryBox = new THREE.BoxGeometry(10,0.5,10);
 
 // material
 const materialCube = new THREE.MeshStandardMaterial()
 materialCube.color = new THREE.Color(0x00ff00)
 materialCube.metalness = 0.95;
-materialCube.roughness = 0.4;
-/*
-const materialSphere = new THREE.MeshStandardMaterial()
-materialSphere.color = new THREE.Color(0xffffff)
-materialSphere.metalness = 0.95;
-materialSphere.roughness = 0;
-materialSphere.flatShading = true;
-*/
+materialCube.roughness = 0.2;
 const materialBox = new THREE.MeshStandardMaterial()
 materialBox.color = new THREE.Color(0xffffff)
 materialBox.metalness = 0.9;
@@ -28,17 +18,10 @@ materialBox.roughness = 0.3;
 
 
 // mesh
-/*
-const sphere = new THREE.Mesh(geometrySphere, materialSphere)
-*/
 const box = new THREE.Mesh(geometryBox, materialBox)
 const cube = new THREE.Mesh(geometryCube, materialCube)
 cube.castShadow = true;
 cube.receiveShadow = false;
-/*
-sphere.castShadow = true;
-sphere.receiveShadow = false;
-*/
 box.receiveShadow = true;
 
 
@@ -79,34 +62,45 @@ camera.rotation.y = -0.75;
 scene.add(box, cube);
 
 // objects position
-box.position.y = -1;
-cube.position.y = 0.3;
+box.position.set(0,-1,0);
+cube.position.set(0,0.3,0);
 
 // lights
-const pointLight = new THREE.PointLight(0xff0000, 5)
-pointLight.position.set(3,5,4)
-pointLight.castShadow = true;
-pointLight.shadow.radius = 20;
+const redLight = new THREE.PointLight(0xff0000, 5)
+redLight.position.set(3,5,4)
+redLight.castShadow = true;
+redLight.shadow.radius = 15;
 
-const pointLight2 = new THREE.PointLight(0x0000ff, 5)
-pointLight2.position.set(-3,5,-4)
-pointLight2.castShadow = true;
-pointLight2.shadow.radius = 20;
+const blueLight = new THREE.PointLight(0x0000ff, 5)
+blueLight.position.set(-3,5,-4)
+blueLight.castShadow = true;
+blueLight.shadow.radius = 15;
 
-const light = new THREE.PointLight( 0xffffff, 1.5 );
-light.position.set(0,20,0)
-light.castShadow = true;
-light.shadow.radius = 1;
+const ambientLight = new THREE.PointLight( 0xffffff, 1.5 );
+ambientLight.position.set(0,20,0)
+ambientLight.castShadow = true;
+ambientLight.shadow.radius = 5;
 
-scene.add(pointLight, pointLight2, light)
+const ambientLight2 = new THREE.PointLight( 0xffffff, 3 );
+ambientLight2.position.set(-9,-5,9)
+ambientLight2.castShadow = true;
+
+const ambientLight3 = new THREE.PointLight( 0xffffff, 3 );
+ambientLight3.position.set(9,-5,-9)
+ambientLight3.castShadow = true;
+ambientLight3.shadow.radius = 1;
+
+scene.add(redLight, blueLight, ambientLight, ambientLight2, ambientLight3)
 
 // loader
 /*
-let loader = new THREE.GLTFLoader();
-loader.load('trybeLogo.gltf', function(gltf) {
-    scene.add(gltf.scene);
-    trybe = gltf.scene.children[0];
-    trybe.position.set(1,1,1)
+let loader = new THREE.FBXLoader();
+loader.load('three-js-test/trybe-logo/trybeLogo.fbx', function(fbx) {
+    trybe = fbx.scene.children[0];
+    trybe.position.set(3,2,3)
+    scene.add(fbx.scene);
+    trybe.receiveShadow = false;
+    trybe.castShadow = true;
 })
 */
 
@@ -117,13 +111,42 @@ controls.enableDamping = true;
 controls.campingFactor = 0.25;
 controls.enableZoom = true;
 
-
 // animation
+let cubeZMinus = false; 
+let cubeZPlus = true;
+let cubeXMinus = false; 
+let cubeXPlus = true;
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-    cube.rotation.x += .01;
-    cube.rotation.z += .01;
+    cube.rotation.x += 0.01;
+    cube.rotation.z += 0.01;
+    if(cubeZPlus == true){
+        cube.position.z += 0.03;
+        if(cube.position.z >= 4.5){
+            cubeZPlus = false;
+            cubeZMinus = true;
+        }
+    } else if(cubeZMinus == true) {
+        cube.position.z -= 0.04;
+        if(cube.position.z <= -4.5){
+            cubeZMinus = false;
+            cubeZPlus = true;
+        }
+    }
+    if(cubeXPlus == true){
+        cube.position.x += 0.02;
+        if(cube.position.x >= 4.5){
+            cubeXPlus = false;
+            cubeXMinus = true;
+        }
+    } else if(cubeXMinus == true) {
+        cube.position.x -= 0.03;
+        if(cube.position.x <= -4.5){
+            cubeXMinus = false;
+            cubeXPlus = true;
+        }
+    }
 }
 animate();
